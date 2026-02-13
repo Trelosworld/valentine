@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Artist Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-bg: #0a0a0c;
+            --deep-charcoal: #0d0d0f;
+            --lighter-dark: #1a1a1f;
+            --text-white: #f5f5f7;
+            --text-gray: #c7c7cc;
+            --accent-pink: #ff006e;
+            --accent-magenta: #d946ef;
+            --glow-pink: rgba(255, 0, 110, 0.4);
+            --glow-purple: rgba(217, 70, 239, 0.3);
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(217, 70, 239, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 110, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(138, 43, 226, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Noise texture overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.6;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 100px;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Profile Image */
+        .profile-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: floatAnimation 6s ease-in-out infinite;
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .profile-image-wrapper {
+            position: relative;
+            width: 420px;
+            height: 420px;
+        }
+
+        /* Animated rings around profile */
+        .profile-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box,
+                        linear-gradient(135deg, var(--accent-pink), var(--accent-magenta), transparent) border-box;
+            animation: ringPulse 4s ease-in-out infinite;
+        }
+
+        .profile-ring:nth-child(1) {
+            width: 440px;
+            height: 440px;
+            animation-delay: 0s;
+        }
+
+        .profile-ring:nth-child(2) {
+            width: 470px;
+            height: 470px;
+            animation-delay: 1.3s;
+            opacity: 0.6;
+        }
+
+        .profile-ring:nth-child(3) {
+            width: 500px;
+            height: 500px;
+            animation-delay: 2.6s;
+            opacity: 0.3;
+        }
+
+        @keyframes ringPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .profile-image {
+            position: relative;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 0 60px var(--glow-purple),
+                0 0 120px var(--glow-pink),
+                inset 0 0 40px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(1.05) contrast(1.1);
+        }
+
+        /* Content Section */
+        .hero-content {
+            animation-delay: 0.3s;
+        }
+
+        .greeting {
+            font-family: 'Syne', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, var(--text-white) 0%, var(--accent-magenta) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .bio-text {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .bio-text strong {
+            color: var(--text-white);
+            font-weight: 700;
+        }
+
+        .bio-highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .bio-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-magenta));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .bio-highlight:hover::after {
+            transform: scaleX(1);
+        }
+
+        .bio-text a {
+            color: var(--accent-pink);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .bio-text a:hover {
+            color: var(--accent-magenta);
+        }
+
+        /* CTA Button */
+        .cta-container {
+            margin-top: 48px;
+        }
+
+        .cta-button {
+            position: relative;
+            display: inline-block;
+            padding: 20px 48px;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: white;
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-magenta) 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            box-shadow: 
+                0 10px 40px rgba(255, 0, 110, 0.3),
+                0 0 0 0 rgba(255, 0, 110, 0.4);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 15px 50px rgba(255, 0, 110, 0.5),
+                0 0 0 8px rgba(255, 0, 110, 0.2);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+
+        /* As Seen In Section */
+        .trust-bar {
+            margin-top: 100px;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 0, 110, 0.02) 50%, 
+                transparent 100%);
+        }
+
+        .trust-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .trust-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--text-gray);
+            white-space: nowrap;
+        }
+
+        .trust-logos {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        .logo-item {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: default;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-item:hover {
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+
+            .profile-container {
+                justify-content: center;
+            }
+
+            .hero-content {
+                max-width: 700px;
+                margin: 0 auto;
+            }
+
+            .cta-container {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .hero {
+                padding: 80px 0 60px;
+            }
+
+            .profile-image-wrapper {
+                width: 320px;
+                height: 320px;
+            }
+
+            .profile-image {
+                width: 320px;
+                height: 320px;
+            }
+
+            .profile-ring:nth-child(1) {
+                width: 340px;
+                height: 340px;
+            }
+
+            .profile-ring:nth-child(2) {
+                width: 370px;
+                height: 370px;
+            }
+
+            .profile-ring:nth-child(3) {
+                width: 400px;
+                height: 400px;
+            }
+
+            .greeting {
+                font-size: 2.2rem;
+            }
+
+            .bio-text {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 18px 40px;
+                font-size: 0.85rem;
+            }
+
+            .trust-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .trust-logos {
+                justify-content: center;
+                gap: 30px;
+            }
+
+            .logo-item {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-image-wrapper {
+                width: 280px;
+                height: 280px;
+            }
+
+            .profile-image {
+                width: 280px;
+                height: 280px;
+            }
+
+            .greeting {
+                font-size: 1.8rem;
+            }
+
+            .cta-button {
+                width: 100%;
+                padding: 18px 32px;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(to bottom, var(--accent-pink), transparent);
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <!-- Profile Image Section -->
+                <div class="profile-container">
+                    <div class="profile-image-wrapper">
+                        <div class="profile-ring"></div>
+                        <div class="profile-ring"></div>
+                        <div class="profile-ring"></div>
+                        <div class="profile-image">
+                            <img src="IMG_4458.jpeg" alt="Creative Artist Portrait">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Section -->
+                <div class="hero-content">
+                    <h1 class="greeting">Hi! I'm AYEBANOA. Thanks for stopping by!</h1>
+                    
+                    <p class="bio-text">
+                        I usually go by this mantra that says <strong>"before I am human, I am a hater"</strong> but I have grown to enjoy my own little bubble and become my own woman (I am strong and healthy).
+                    </p>
+
+                    <p class="bio-text">
+                        There is <strong>nobody else in this world I would rather be</strong>—I mean have you seen me? Naaaah go look at the header again.
+                    </p>
+
+                    <p class="bio-text">
+                        I know the culture of Valentine's is to appreciate your significant other (big whoop!) I want to take this opportunity to <strong class="bio-highlight">thank me for ME</strong>. I am proud of myself for having so much love and deciding to share it with you earthlings (might be a bad idea).
+                    </p>
+
+                    <p class="bio-text">
+                        I Love you so much please don't start doing anything weird (might be too late) 🍃
+                    </p>
+
+                    <div class="cta-container">
+                        <button class="cta-button">Will You Be My Valentine?</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- As Seen In Section -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-content">
+                <div class="trust-label">AS SEEN IN</div>
+                <div class="trust-logos">
+                    <div class="logo-item">ADOBE</div>
+                    <div class="logo-item">CREATIVE REVIEW</div>
+                    <div class="logo-item">DESIGNBOOM</div>
+                    <div class="logo-item">BEHANCE</div>
+                    <div class="logo-item">AWWWARDS</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll behavior
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Add your scroll or navigation logic here
+            console.log('CTA clicked - add your navigation logic');
+        });
+
+        // Add parallax effect to profile image on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const profileContainer = document.querySelector('.profile-container');
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+            
+            profileContainer.style.transform = `
+                translateY(${mouseY * 20}px) 
+                translateX(${mouseX * 20}px)
+            `;
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe trust bar
+        const trustBar = document.querySelector('.trust-bar');
+        trustBar.style.opacity = '0';
+        trustBar.style.transform = 'translateY(30px)';
+        trustBar.style.transition = 'all 0.8s ease';
+        observer.observe(trustBar);
+    </script>
+</body>
+</html>
